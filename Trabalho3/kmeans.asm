@@ -71,31 +71,31 @@ Loop1:
     blt a6, a7, Lss #Caso d1 menor que d2...
     add s10, s10, s4 #Incrementando o acumulador x de C2
     add s11, s11, s5 #Incrementando o acumulador y de C2
+    addi t5, t5, 1 #Incrementando variável que conta numero de pontos no acumulador
     beq x0, x0, Cont1 #Continua o algoritmo...
 
     Lss:
         add s8, s8, s4 #Incrementando o acumulador x de C1
         add s9, s9, s5 #Incrementando o acumulador y de C1
-    
+        addi t4, t4, 1 #Incrementando variável que conta numero de pontos no acumulador
     Cont1:
     addi t0, t0, 8 #Anda com ponteiro de pontos
-    addi t5, t5, 1 #Incrementando variável que conta numero de pontos
     beq x0, x0, Loop1 #Repete o loop para processar proximo ponto
 End1:
-addi s0, x0, 0
-addi s1, x0, 0
-addi s2, x0, 0
-addi s3, x0, 0
+addi s0, x0, 0 #Reseta coordenada x de C1
+addi s1, x0, 0 #Reseta coordenada y de C1
+addi s2, x0, 0 #Reseta coordenada x de C2
+addi s3, x0, 0 #Reseta coordenada y de C2
 Loop2:
-	blt s8, t5, Cont2 #Se não for mais possível dividir acc1x por n pontos, continue...
-    sub s8, s8, t5 #Realizando iteração de divisão
+	blt s8, t4, Cont2 #Se não for mais possível dividir acc1x por n pontos, continue...
+    sub s8, s8, t4 #Realizando iteração de divisão
     addi s0, s0, 1 #Realizando iteração de divisão
     beq x0, x0, Loop2 #Repete o loop até não poder mais dividir
 Cont2:
 
 Loop3:
-	blt s9, t5, Cont3 #Se não for mais possível dividir acc1y por n pontos, continue...
-    sub s9, s9, t5 #Realizando iteração de divisão
+	blt s9, t4, Cont3 #Se não for mais possível dividir acc1y por n pontos, continue...
+    sub s9, s9, t4 #Realizando iteração de divisão
     addi s1, s1, 1 #Realizando iteração de divisão
     beq x0, x0, Loop3 #Repete o loop até não poder mais dividir
 Cont3:
@@ -113,7 +113,7 @@ Loop5:
     addi s3, s3, 1 #Realizando iteração de divisão
     beq x0, x0, Loop5 #Repete o loop até não poder mais dividir
 Cont5:
-sw s0, 0(gp)
-sw s1, 4(gp)
-sw s2, 8(gp)
-sw s3, 12(gp)
+sw s0, 0(gp) #Grava coordenada x de C1
+sw s1, 4(gp) #Grava coordenada y de C1
+sw s2, 8(gp) #Grava coordenada x de C2
+sw s3, 12(gp) #Grava coordenada y de C2
